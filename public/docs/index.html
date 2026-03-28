@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - Keel Framework</title>
+  <meta name="description" content="Comprehensive documentation for Keel, a zero-dependency Go web framework where every feature is a self-describing module.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9A%93</text></svg>">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" fill="currentColor" opacity="0.15"/>
+          <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M10 12l6 4 6-4M16 16v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Keel</span>
+      </a>
+      <div class="nav-links">
+        <a href="../#features">Features</a>
+        <a href="./" class="active">Docs</a>
+        <a href="https://github.com/keel-go/keel" class="btn btn-sm" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="../#features" class="mobile-menu-link">Features</a>
+    <a href="./" class="mobile-menu-link">Docs</a>
+    <a href="https://github.com/keel-go/keel" class="mobile-menu-link" target="_blank" rel="noopener">GitHub</a>
+  </div>
+
+  <!-- Sidebar Backdrop (mobile) -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <div class="docs-layout">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar" id="docs-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Getting Started</div>
+        <a href="#introduction" class="sidebar-link active">Introduction</a>
+        <a href="#installation" class="sidebar-link">Installation</a>
+        <a href="#quickstart" class="sidebar-link">Quickstart</a>
+        <a href="#project-structure" class="sidebar-link">Project Structure</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Core Concepts</div>
+        <a href="#modules" class="sidebar-link">Modules</a>
+        <a href="#module-interface" class="sidebar-link">Module Interface</a>
+        <a href="#optional-interfaces" class="sidebar-link">Optional Interfaces</a>
+        <a href="#lifecycle" class="sidebar-link">Lifecycle Hooks</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Routing</div>
+        <a href="#routing" class="sidebar-link">Defining Routes</a>
+        <a href="#route-parameters" class="sidebar-link">Route Parameters</a>
+        <a href="#route-groups" class="sidebar-link">Route Groups</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Request &amp; Response</div>
+        <a href="#context" class="sidebar-link">Context</a>
+        <a href="#request-helpers" class="sidebar-link">Request Helpers</a>
+        <a href="#response-helpers" class="sidebar-link">Response Helpers</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Database</div>
+        <a href="#database" class="sidebar-link">Connection</a>
+        <a href="#query-builder" class="sidebar-link">Query Builder</a>
+        <a href="#models" class="sidebar-link">Models</a>
+        <a href="#relationships" class="sidebar-link">Relationships</a>
+        <a href="#migrations" class="sidebar-link">Migrations</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Features</div>
+        <a href="#authentication" class="sidebar-link">Authentication</a>
+        <a href="#middleware" class="sidebar-link">Middleware</a>
+        <a href="#events" class="sidebar-link">Event Bus</a>
+        <a href="#validation" class="sidebar-link">Validation</a>
+        <a href="#websocket" class="sidebar-link">WebSocket</a>
+        <a href="#sse" class="sidebar-link">Server-Sent Events</a>
+        <a href="#storage" class="sidebar-link">File Storage</a>
+        <a href="#logging" class="sidebar-link">Logging</a>
+        <a href="#configuration" class="sidebar-link">Configuration</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Tooling</div>
+        <a href="#cli" class="sidebar-link">CLI Commands</a>
+        <a href="#testing" class="sidebar-link">Testing</a>
+        <a href="#agent-workflow" class="sidebar-link">Agent Workflow</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-heading">Reference</div>
+        <a href="#design-constraints" class="sidebar-link">Design Constraints</a>
+        <a href="#comparison" class="sidebar-link">Comparison</a>
+        <a href="#app-example" class="sidebar-link">Full App Example</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-main">
+      <div class="docs-content">
+
+        <!-- ============================================ -->
+        <!-- INTRODUCTION                                  -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="introduction">
+          <div class="docs-page-header">
+            <h1><span class="gradient-text">Keel Documentation</span></h1>
+            <p>A zero-dependency Go web framework where every feature is a self-describing module. Explicit, agent-friendly, compile-time safe.</p>
+          </div>
+
+          <p>Existing Go frameworks either do too little (just routing) or too much (magic, reflection, tons of dependencies). Keel sits in between: full-stack features with Go's explicitness.</p>
+
+          <p>The core idea: <strong>every module fully declares itself.</strong> No service providers. No reflection. No scattered config files. No <code>init()</code> side effects. A module is a Go struct implementing an interface. The framework is the sum of its modules.</p>
+
+          <p>This has three practical consequences:</p>
+
+          <ul>
+            <li><strong>Human-readable.</strong> Open one <code>module.go</code> and see every route, model, migration, event, and dependency for that feature.</li>
+            <li><strong>Agent-friendly.</strong> A coding agent reads one file per module and understands the full scope. No hunting through config.</li>
+            <li><strong>Compile-time safe.</strong> If it compiles, the wiring is correct. No runtime registration surprises.</li>
+          </ul>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- INSTALLATION                                  -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="installation">
+          <h2>Installation</h2>
+
+          <p>Install Keel with <code>go get</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">bash</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>go get github.com/keel-go/keel</pre>
+          </div>
+
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>
+            <p><strong>Requires Go 1.21+</strong> for <code>log/slog</code> support. Keel has zero external dependencies &mdash; only Go stdlib and <code>golang.org/x/</code> packages.</p>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- QUICKSTART                                    -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="quickstart">
+          <h2>Quickstart</h2>
+
+          <p>Create a minimal app with one module:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">package</span> main
+
+<span class="kw">import</span> (
+    <span class="str">"github.com/keel-go/keel"</span>
+)
+
+<span class="cm">// GreetModule is a minimal module that serves a greeting.</span>
+<span class="kw">type</span> <span class="type">GreetModule</span> <span class="kw">struct</span>{}
+
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Name</span>() <span class="type">string</span>                   { <span class="kw">return</span> <span class="str">"greet"</span> }
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">DependsOn</span>() []<span class="type">string</span>            { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Models</span>() []<span class="type">keel.Model</span>           { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Migrations</span>() []<span class="type">keel.Migration</span>   { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Events</span>() []<span class="type">keel.EventBinding</span>    { <span class="kw">return</span> <span class="lit">nil</span> }
+
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Routes</span>() []<span class="type">keel.Route</span> {
+    <span class="kw">return</span> []<span class="type">keel.Route</span>{
+        keel.<span class="fn">Get</span>(<span class="str">"/hello/{name}"</span>, m.Hello),
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">GreetModule</span>) <span class="fn">Hello</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    name := ctx.<span class="fn">Param</span>(<span class="str">"name"</span>)
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">string</span>{<span class="str">"message"</span>: <span class="str">"Hello, "</span> + name + <span class="str">"!"</span>})
+}
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+    app := keel.<span class="fn">New</span>(<span class="type">GreetModule</span>{})
+    app.<span class="fn">Use</span>(keel.<span class="fn">Logger</span>())
+    app.<span class="fn">Use</span>(keel.<span class="fn">Recovery</span>())
+    app.<span class="fn">RunCLI</span>() <span class="cm">// go run . serve</span>
+}</pre>
+          </div>
+
+          <p>Run it:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">bash</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>go run . serve
+# =&gt; Keel listening on :8080
+
+curl http://localhost:8080/hello/world
+# =&gt; {"message":"Hello, world!"}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- PROJECT STRUCTURE                             -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="project-structure">
+          <h2>Project Structure</h2>
+
+          <p>A Keel application follows a modular directory layout. Each feature gets its own directory under <code>modules/</code>:</p>
+
+          <div class="file-tree">
+<span class="dir">myapp/</span>
+<span class="pipe">├── </span><span class="file">main.go</span>                     <span class="comment"># App bootstrap &mdash; lists all modules</span>
+<span class="pipe">├── </span><span class="file">.env</span>                        <span class="comment"># Environment variables</span>
+<span class="pipe">├── </span><span class="dir">modules/</span>
+<span class="pipe">│   ├── </span><span class="dir">user/</span>
+<span class="pipe">│   │   ├── </span><span class="file">module.go</span>           <span class="comment"># Module struct &mdash; routes, models, events, deps</span>
+<span class="pipe">│   │   ├── </span><span class="file">handlers.go</span>         <span class="comment"># HTTP handler methods</span>
+<span class="pipe">│   │   ├── </span><span class="file">models.go</span>           <span class="comment"># User struct, CreateUserInput, etc.</span>
+<span class="pipe">│   │   ├── </span><span class="file">migrations.go</span>       <span class="comment"># Schema definitions</span>
+<span class="pipe">│   │   └── </span><span class="file">events.go</span>           <span class="comment"># UserCreatedEvent, UserDeletedEvent</span>
+<span class="pipe">│   ├── </span><span class="dir">blog/</span>
+<span class="pipe">│   │   ├── </span><span class="file">module.go</span>
+<span class="pipe">│   │   ├── </span><span class="file">handlers.go</span>
+<span class="pipe">│   │   ├── </span><span class="file">models.go</span>
+<span class="pipe">│   │   ├── </span><span class="file">migrations.go</span>
+<span class="pipe">│   │   └── </span><span class="file">events.go</span>
+<span class="pipe">│   └── </span><span class="dir">notification/</span>
+<span class="pipe">│       ├── </span><span class="file">module.go</span>
+<span class="pipe">│       ├── </span><span class="file">handlers.go</span>
+<span class="pipe">│       └── </span><span class="file">listeners.go</span>        <span class="comment"># Reacts to events from other modules</span>
+<span class="pipe">└── </span><span class="dir">public/</span>
+    <span class="pipe">└── </span><span class="dir">assets/</span>
+          </div>
+
+          <h3>Framework Package Structure</h3>
+
+          <p>The Keel framework itself is organized as a single Go package:</p>
+
+          <div class="file-tree">
+<span class="dir">keel/</span>                  <span class="comment"># Framework package</span>
+<span class="pipe">├── </span><span class="file">app.go</span>              <span class="comment"># App struct, New(), Serve(), RunCLI()</span>
+<span class="pipe">├── </span><span class="file">module.go</span>           <span class="comment"># Module interface + optional interfaces</span>
+<span class="pipe">├── </span><span class="file">router.go</span>           <span class="comment"># Radix-tree HTTP router</span>
+<span class="pipe">├── </span><span class="file">context.go</span>          <span class="comment"># Request/response context</span>
+<span class="pipe">├── </span><span class="file">middleware.go</span>        <span class="comment"># Middleware types + built-in middleware</span>
+<span class="pipe">├── </span><span class="file">db.go</span>               <span class="comment"># Database connection manager</span>
+<span class="pipe">├── </span><span class="file">query.go</span>            <span class="comment"># Query builder</span>
+<span class="pipe">├── </span><span class="file">model.go</span>            <span class="comment"># Model definition + relationships</span>
+<span class="pipe">├── </span><span class="file">migrate.go</span>          <span class="comment"># Migration runner + schema builder</span>
+<span class="pipe">├── </span><span class="file">validate.go</span>         <span class="comment"># Validation engine</span>
+<span class="pipe">├── </span><span class="file">event.go</span>            <span class="comment"># Event bus (sync + async dispatch)</span>
+<span class="pipe">├── </span><span class="file">session.go</span>          <span class="comment"># Session management</span>
+<span class="pipe">├── </span><span class="file">jwt.go</span>              <span class="comment"># JWT creation/validation (HMAC-SHA256)</span>
+<span class="pipe">├── </span><span class="file">config.go</span>           <span class="comment"># Env var loader + typed config</span>
+<span class="pipe">├── </span><span class="file">cli.go</span>              <span class="comment"># CLI command runner</span>
+<span class="pipe">├── </span><span class="file">log.go</span>              <span class="comment"># Structured logging (slog wrapper)</span>
+<span class="pipe">├── </span><span class="file">storage.go</span>          <span class="comment"># File storage abstraction</span>
+<span class="pipe">├── </span><span class="file">ws.go</span>               <span class="comment"># WebSocket support</span>
+<span class="pipe">├── </span><span class="file">sse.go</span>              <span class="comment"># Server-Sent Events</span>
+<span class="pipe">├── </span><span class="file">testing.go</span>          <span class="comment"># Test app builder + assertions</span>
+<span class="pipe">└── </span><span class="file">errors.go</span>           <span class="comment"># Error types (HTTPError, ValidationError)</span>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MODULES                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="modules">
+          <h2>Modules</h2>
+
+          <p>Modules are the foundational concept in Keel. Every feature in your application is a module &mdash; a Go struct that implements the <code>Module</code> interface. A module fully declares its routes, models, migrations, events, and dependencies in one place.</p>
+
+          <p>Here's a complete blog module:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">package</span> blog
+
+<span class="kw">import</span> <span class="str">"github.com/keel-go/keel"</span>
+
+<span class="kw">type</span> <span class="type">Module</span> <span class="kw">struct</span>{}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Name</span>() <span class="type">string</span> { <span class="kw">return</span> <span class="str">"blog"</span> }
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Routes</span>() []<span class="type">keel.Route</span> {
+    <span class="kw">return</span> []<span class="type">keel.Route</span>{
+        keel.<span class="fn">Get</span>(<span class="str">"/posts"</span>, m.ListPosts),
+        keel.<span class="fn">Get</span>(<span class="str">"/posts/{id}"</span>, m.ShowPost),
+        keel.<span class="fn">Post</span>(<span class="str">"/posts"</span>, m.CreatePost).<span class="fn">Middleware</span>(keel.Auth),
+        keel.<span class="fn">Delete</span>(<span class="str">"/posts/{id}"</span>, m.DeletePost).<span class="fn">Middleware</span>(keel.Auth),
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Models</span>() []<span class="type">keel.Model</span> {
+    <span class="kw">return</span> []<span class="type">keel.Model</span>{
+        keel.<span class="fn">DefineModel</span>(<span class="str">"posts"</span>, <span class="type">Post</span>{},
+            keel.<span class="fn">BelongsTo</span>(<span class="str">"author"</span>, user.<span class="type">User</span>{}),
+            keel.<span class="fn">HasMany</span>(<span class="str">"comments"</span>, <span class="type">Comment</span>{}),
+        ),
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Migrations</span>() []<span class="type">keel.Migration</span> {
+    <span class="kw">return</span> []<span class="type">keel.Migration</span>{
+        {Version: <span class="lit">1</span>, Up: m.createPostsTable, Down: m.dropPostsTable},
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Events</span>() []<span class="type">keel.EventBinding</span> {
+    <span class="kw">return</span> []<span class="type">keel.EventBinding</span>{
+        {Emits: <span class="type">PostCreatedEvent</span>{}},
+        {Emits: <span class="type">PostDeletedEvent</span>{}},
+        {Listens: user.<span class="type">UserDeletedEvent</span>{}, Handler: m.cleanupUserPosts},
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">DependsOn</span>() []<span class="type">string</span> {
+    <span class="kw">return</span> []<span class="type">string</span>{<span class="str">"user"</span>}
+}</pre>
+          </div>
+
+          <div class="callout callout-tip">
+            <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+            <p>One module = one <code>module.go</code> = complete declaration. A developer or AI agent can open a single file to understand the full scope of any feature.</p>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MODULE INTERFACE                              -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="module-interface">
+          <h2>Module Interface</h2>
+
+          <p>This is the entire contract. Every feature in a Keel app implements this interface:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">Module</span> <span class="kw">interface</span> {
+    <span class="fn">Name</span>() <span class="type">string</span>
+    <span class="fn">Routes</span>() []<span class="type">Route</span>
+    <span class="fn">Models</span>() []<span class="type">Model</span>
+    <span class="fn">Migrations</span>() []<span class="type">Migration</span>
+    <span class="fn">Events</span>() []<span class="type">EventBinding</span>
+    <span class="fn">DependsOn</span>() []<span class="type">string</span>
+}</pre>
+          </div>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Returns</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Name()</code></td>
+                  <td><code>string</code></td>
+                  <td>Unique identifier for the module</td>
+                </tr>
+                <tr>
+                  <td><code>Routes()</code></td>
+                  <td><code>[]Route</code></td>
+                  <td>HTTP routes this module handles</td>
+                </tr>
+                <tr>
+                  <td><code>Models()</code></td>
+                  <td><code>[]Model</code></td>
+                  <td>Database models with relationships</td>
+                </tr>
+                <tr>
+                  <td><code>Migrations()</code></td>
+                  <td><code>[]Migration</code></td>
+                  <td>Schema migrations (up/down)</td>
+                </tr>
+                <tr>
+                  <td><code>Events()</code></td>
+                  <td><code>[]EventBinding</code></td>
+                  <td>Events emitted and listened to</td>
+                </tr>
+                <tr>
+                  <td><code>DependsOn()</code></td>
+                  <td><code>[]string</code></td>
+                  <td>Names of modules this one requires</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Return <code>nil</code> for any method that doesn't apply to your module. For example, a module that only provides routes with no database models:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">HealthModule</span>) <span class="fn">Models</span>() []<span class="type">keel.Model</span>         { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">HealthModule</span>) <span class="fn">Migrations</span>() []<span class="type">keel.Migration</span> { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">HealthModule</span>) <span class="fn">Events</span>() []<span class="type">keel.EventBinding</span>  { <span class="kw">return</span> <span class="lit">nil</span> }
+<span class="kw">func</span> (m <span class="type">HealthModule</span>) <span class="fn">DependsOn</span>() []<span class="type">string</span>          { <span class="kw">return</span> <span class="lit">nil</span> }</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- OPTIONAL INTERFACES                           -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="optional-interfaces">
+          <h2>Optional Interfaces</h2>
+
+          <p>Beyond the core <code>Module</code> interface, Keel provides optional interfaces you can implement to extend module behavior. Only implement what you need:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">HasMiddleware</span> <span class="kw">interface</span>{ <span class="fn">Middleware</span>() []<span class="type">Middleware</span> }
+<span class="kw">type</span> <span class="type">HasCommands</span>   <span class="kw">interface</span>{ <span class="fn">Commands</span>() []<span class="type">Command</span> }
+<span class="kw">type</span> <span class="type">HasSchedule</span>   <span class="kw">interface</span>{ <span class="fn">Schedule</span>() []<span class="type">ScheduledTask</span> }
+<span class="kw">type</span> <span class="type">HasConfig</span>     <span class="kw">interface</span>{ <span class="fn">Config</span>() <span class="type">any</span> }
+<span class="kw">type</span> <span class="type">HasSeeder</span>     <span class="kw">interface</span>{ <span class="fn">Seed</span>(db *<span class="type">DB</span>) <span class="type">error</span> }</pre>
+          </div>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Interface</th>
+                  <th>Method</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>HasMiddleware</code></td>
+                  <td><code>Middleware() []Middleware</code></td>
+                  <td>Module-scoped middleware applied to all routes</td>
+                </tr>
+                <tr>
+                  <td><code>HasCommands</code></td>
+                  <td><code>Commands() []Command</code></td>
+                  <td>Custom CLI commands for this module</td>
+                </tr>
+                <tr>
+                  <td><code>HasSchedule</code></td>
+                  <td><code>Schedule() []ScheduledTask</code></td>
+                  <td>Recurring tasks (cron-style scheduling)</td>
+                </tr>
+                <tr>
+                  <td><code>HasConfig</code></td>
+                  <td><code>Config() any</code></td>
+                  <td>Typed configuration struct for the module</td>
+                </tr>
+                <tr>
+                  <td><code>HasSeeder</code></td>
+                  <td><code>Seed(db *DB) error</code></td>
+                  <td>Database seeder for test/development data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Example: Module with Middleware and Commands</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">AdminModule</span> <span class="kw">struct</span>{}
+
+<span class="cm">// Core Module interface methods...</span>
+
+<span class="cm">// HasMiddleware &mdash; all admin routes require auth</span>
+<span class="kw">func</span> (m <span class="type">AdminModule</span>) <span class="fn">Middleware</span>() []<span class="type">keel.Middleware</span> {
+    <span class="kw">return</span> []<span class="type">keel.Middleware</span>{keel.Auth, keel.RequireRole(<span class="str">"admin"</span>)}
+}
+
+<span class="cm">// HasCommands &mdash; custom CLI commands</span>
+<span class="kw">func</span> (m <span class="type">AdminModule</span>) <span class="fn">Commands</span>() []<span class="type">keel.Command</span> {
+    <span class="kw">return</span> []<span class="type">keel.Command</span>{
+        {Name: <span class="str">"admin:reset"</span>, Desc: <span class="str">"Reset admin password"</span>, Run: m.resetAdmin},
+    }
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- LIFECYCLE HOOKS                               -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="lifecycle">
+          <h2>Lifecycle Hooks</h2>
+
+          <p>Modules can hook into the application lifecycle by implementing these interfaces:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">OnInit</span>     <span class="kw">interface</span>{ <span class="fn">Init</span>(app *<span class="type">App</span>) <span class="type">error</span> }
+<span class="kw">type</span> <span class="type">OnReady</span>    <span class="kw">interface</span>{ <span class="fn">Ready</span>(app *<span class="type">App</span>) <span class="type">error</span> }
+<span class="kw">type</span> <span class="type">OnShutdown</span> <span class="kw">interface</span>{ <span class="fn">Shutdown</span>(ctx <span class="type">context.Context</span>) <span class="type">error</span> }</pre>
+          </div>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Hook</th>
+                  <th>When</th>
+                  <th>Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>OnInit</code></td>
+                  <td>During <code>app.New()</code>, before the server starts</td>
+                  <td>Set up connections, validate config, register services</td>
+                </tr>
+                <tr>
+                  <td><code>OnReady</code></td>
+                  <td>After all modules are initialized, before serving</td>
+                  <td>Start background workers, warm caches</td>
+                </tr>
+                <tr>
+                  <td><code>OnShutdown</code></td>
+                  <td>On graceful shutdown (SIGTERM/SIGINT)</td>
+                  <td>Close connections, flush buffers, cleanup</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">CacheModule</span>) <span class="fn">Init</span>(app *<span class="type">keel.App</span>) <span class="type">error</span> {
+    <span class="cm">// Connect to Redis, set up cache pools, etc.</span>
+    m.pool = initRedis(app.Config(<span class="str">"REDIS_URL"</span>))
+    <span class="kw">return</span> <span class="lit">nil</span>
+}
+
+<span class="kw">func</span> (m <span class="type">CacheModule</span>) <span class="fn">Shutdown</span>(ctx <span class="type">context.Context</span>) <span class="type">error</span> {
+    <span class="kw">return</span> m.pool.<span class="fn">Close</span>()
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- ROUTING                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="routing">
+          <h2>Routing</h2>
+
+          <p>Keel uses a radix-tree router for fast route matching. Routes are defined in a module's <code>Routes()</code> method using convenience functions:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Routes</span>() []<span class="type">keel.Route</span> {
+    <span class="kw">return</span> []<span class="type">keel.Route</span>{
+        keel.<span class="fn">Get</span>(<span class="str">"/posts"</span>, m.ListPosts),
+        keel.<span class="fn">Get</span>(<span class="str">"/posts/{id}"</span>, m.ShowPost),
+        keel.<span class="fn">Post</span>(<span class="str">"/posts"</span>, m.CreatePost),
+        keel.<span class="fn">Put</span>(<span class="str">"/posts/{id}"</span>, m.UpdatePost),
+        keel.<span class="fn">Patch</span>(<span class="str">"/posts/{id}"</span>, m.PatchPost),
+        keel.<span class="fn">Delete</span>(<span class="str">"/posts/{id}"</span>, m.DeletePost),
+    }
+}</pre>
+          </div>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>HTTP Method</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>keel.Get(path, handler)</code></td>
+                  <td><span class="method-badge method-get">GET</span></td>
+                  <td>Read resources, list items</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Post(path, handler)</code></td>
+                  <td><span class="method-badge method-post">POST</span></td>
+                  <td>Create new resources</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Put(path, handler)</code></td>
+                  <td><span class="method-badge method-put">PUT</span></td>
+                  <td>Replace entire resource</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Patch(path, handler)</code></td>
+                  <td><span class="method-badge method-patch">PATCH</span></td>
+                  <td>Partial resource update</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Delete(path, handler)</code></td>
+                  <td><span class="method-badge method-delete">DELETE</span></td>
+                  <td>Remove resource</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Route-Level Middleware</h3>
+
+          <p>Chain middleware on individual routes using the <code>.Middleware()</code> method:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>keel.<span class="fn">Post</span>(<span class="str">"/posts"</span>, m.CreatePost).<span class="fn">Middleware</span>(keel.Auth)
+keel.<span class="fn">Delete</span>(<span class="str">"/posts/{id}"</span>, m.DeletePost).<span class="fn">Middleware</span>(keel.Auth, keel.RequireRole(<span class="str">"admin"</span>))</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- ROUTE PARAMETERS                              -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="route-parameters">
+          <h2>Route Parameters</h2>
+
+          <p>Define dynamic segments in your route paths using curly braces. Access them via <code>ctx.Param()</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Route: keel.Get("/posts/{id}", m.ShowPost)</span>
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">ShowPost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    id := ctx.<span class="fn">Param</span>(<span class="str">"id"</span>)   <span class="cm">// string value from URL</span>
+    <span class="cm">// ...</span>
+}
+
+<span class="cm">// Nested parameters: /users/{userId}/posts/{postId}</span>
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">UserPost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    userId := ctx.<span class="fn">Param</span>(<span class="str">"userId"</span>)
+    postId := ctx.<span class="fn">Param</span>(<span class="str">"postId"</span>)
+    <span class="cm">// ...</span>
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- ROUTE GROUPS                                  -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="route-groups">
+          <h2>Route Groups</h2>
+
+          <p>While Keel doesn't have explicit route groups (each module is itself a group), you can organize routes logically within a module and apply middleware at the module level via the <code>HasMiddleware</code> interface:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// All routes in this module get auth middleware applied</span>
+<span class="kw">func</span> (m <span class="type">AdminModule</span>) <span class="fn">Middleware</span>() []<span class="type">keel.Middleware</span> {
+    <span class="kw">return</span> []<span class="type">keel.Middleware</span>{keel.Auth, keel.RequireRole(<span class="str">"admin"</span>)}
+}
+
+<span class="kw">func</span> (m <span class="type">AdminModule</span>) <span class="fn">Routes</span>() []<span class="type">keel.Route</span> {
+    <span class="kw">return</span> []<span class="type">keel.Route</span>{
+        keel.<span class="fn">Get</span>(<span class="str">"/admin/users"</span>, m.ListUsers),
+        keel.<span class="fn">Get</span>(<span class="str">"/admin/stats"</span>, m.Stats),
+        keel.<span class="fn">Post</span>(<span class="str">"/admin/settings"</span>, m.UpdateSettings),
+    }
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- CONTEXT                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="context">
+          <h2>Context</h2>
+
+          <p>Every handler receives a <code>*keel.Context</code> that wraps the HTTP request and response, providing helpers for common operations. Handlers return an <code>error</code> &mdash; the framework handles error responses automatically.</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">CreatePost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    <span class="kw">var</span> input <span class="type">CreatePostInput</span>
+    <span class="kw">if</span> err := ctx.<span class="fn">BindJSON</span>(&amp;input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">if</span> err := ctx.<span class="fn">Validate</span>(input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err <span class="cm">// returns 422 with structured errors</span>
+    }
+    post, err := ctx.DB.<span class="fn">Create</span>(<span class="str">"posts"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+        <span class="str">"title"</span>:   input.Title,
+        <span class="str">"body"</span>:    input.Body,
+        <span class="str">"user_id"</span>: ctx.<span class="fn">UserID</span>(),
+    })
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    ctx.<span class="fn">Emit</span>(<span class="type">PostCreatedEvent</span>{Post: post})
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">201</span>, post)
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- REQUEST HELPERS                               -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="request-helpers">
+          <h2>Request Helpers</h2>
+
+          <p>The context provides methods for reading data from the incoming request:</p>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Returns</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ctx.Param(name)</code></td>
+                  <td><code>string</code></td>
+                  <td>URL path parameter</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.Query(name)</code></td>
+                  <td><code>string</code></td>
+                  <td>Query string parameter</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.QueryInt(name, default)</code></td>
+                  <td><code>int</code></td>
+                  <td>Query parameter parsed as integer</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.Header(name)</code></td>
+                  <td><code>string</code></td>
+                  <td>Request header value</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.BindJSON(&v)</code></td>
+                  <td><code>error</code></td>
+                  <td>Decode JSON body into struct</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.FormValue(name)</code></td>
+                  <td><code>string</code></td>
+                  <td>Form field value</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.FormFile(name)</code></td>
+                  <td><code>*UploadedFile, error</code></td>
+                  <td>Uploaded file from multipart form</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.UserID()</code></td>
+                  <td><code>string</code></td>
+                  <td>Authenticated user ID (from JWT/session)</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.Validate(v)</code></td>
+                  <td><code>error</code></td>
+                  <td>Validate a struct using defined rules</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">ListPosts</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    page := ctx.<span class="fn">QueryInt</span>(<span class="str">"page"</span>, <span class="lit">1</span>)
+    search := ctx.<span class="fn">Query</span>(<span class="str">"q"</span>)
+    userId := ctx.<span class="fn">Param</span>(<span class="str">"userId"</span>)
+
+    posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).
+        <span class="fn">Where</span>(<span class="str">"user_id = ?"</span>, userId).
+        <span class="fn">With</span>(<span class="str">"author"</span>).
+        <span class="fn">Paginate</span>(page, <span class="lit">20</span>)
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, posts)
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- RESPONSE HELPERS                              -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="response-helpers">
+          <h2>Response Helpers</h2>
+
+          <p>The context provides methods for sending responses:</p>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ctx.JSON(status, data)</code></td>
+                  <td>Send JSON response with status code</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.String(status, text)</code></td>
+                  <td>Send plain text response</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.HTML(status, html)</code></td>
+                  <td>Send HTML response</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.NoContent(status)</code></td>
+                  <td>Send empty response (e.g., 204)</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.Redirect(status, url)</code></td>
+                  <td>Redirect to another URL</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.SetHeader(name, value)</code></td>
+                  <td>Set a response header</td>
+                </tr>
+                <tr>
+                  <td><code>ctx.SetCookie(cookie)</code></td>
+                  <td>Set a response cookie</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Error Responses</h3>
+
+          <p>Returning an error from a handler automatically generates the appropriate HTTP response:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Return a generic error &rarr; 500 Internal Server Error</span>
+<span class="kw">return</span> fmt.<span class="fn">Errorf</span>(<span class="str">"something went wrong"</span>)
+
+<span class="cm">// Return an HTTPError for specific status codes</span>
+<span class="kw">return</span> keel.<span class="fn">NewHTTPError</span>(<span class="lit">404</span>, <span class="str">"Post not found"</span>)
+<span class="kw">return</span> keel.<span class="fn">NewHTTPError</span>(<span class="lit">403</span>, <span class="str">"Forbidden"</span>)
+
+<span class="cm">// Validation errors &rarr; 422 with structured field errors</span>
+<span class="kw">return</span> ctx.<span class="fn">Validate</span>(input) <span class="cm">// auto-returns ValidationError</span></pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- DATABASE                                      -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="database">
+          <h2>Database</h2>
+
+          <p>Keel includes a built-in database connection manager. Access it through the context in handlers via <code>ctx.DB</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Database connection is configured via environment variables</span>
+<span class="cm">// DB_DRIVER=postgres</span>
+<span class="cm">// DB_DSN=postgres://user:pass@localhost/myapp?sslmode=disable</span>
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">ListPosts</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).<span class="fn">All</span>()
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, posts)
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- QUERY BUILDER                                 -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="query-builder">
+          <h2>Query Builder</h2>
+
+          <p>The built-in query builder provides a fluent API for constructing database queries without raw SQL:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// SELECT &mdash; fetch records</span>
+posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).
+    <span class="fn">Where</span>(<span class="str">"published = ?"</span>, <span class="lit">true</span>).
+    <span class="fn">OrderBy</span>(<span class="str">"created_at DESC"</span>).
+    <span class="fn">Limit</span>(<span class="lit">10</span>).
+    <span class="fn">All</span>()
+
+<span class="cm">// SELECT with eager loading</span>
+posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).
+    <span class="fn">With</span>(<span class="str">"author"</span>).
+    <span class="fn">Paginate</span>(page, <span class="lit">20</span>)
+
+<span class="cm">// SELECT single record</span>
+post, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).
+    <span class="fn">Where</span>(<span class="str">"id = ?"</span>, id).
+    <span class="fn">First</span>()
+
+<span class="cm">// CREATE &mdash; insert a record</span>
+post, err := ctx.DB.<span class="fn">Create</span>(<span class="str">"posts"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+    <span class="str">"title"</span>:   <span class="str">"My Post"</span>,
+    <span class="str">"body"</span>:    <span class="str">"Content here"</span>,
+    <span class="str">"user_id"</span>: userId,
+})
+
+<span class="cm">// UPDATE &mdash; modify records</span>
+err := ctx.DB.<span class="fn">Update</span>(<span class="str">"posts"</span>, id, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+    <span class="str">"title"</span>: <span class="str">"Updated Title"</span>,
+})
+
+<span class="cm">// DELETE &mdash; remove records</span>
+err := ctx.DB.<span class="fn">Delete</span>(<span class="str">"posts"</span>, id)</pre>
+          </div>
+
+          <h3>Pagination</h3>
+
+          <p>The <code>Paginate(page, perPage)</code> method returns a paginated result set:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>page := ctx.<span class="fn">QueryInt</span>(<span class="str">"page"</span>, <span class="lit">1</span>)
+results, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).<span class="fn">Paginate</span>(page, <span class="lit">20</span>)
+<span class="cm">// results includes: data, total, page, per_page, last_page</span></pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MODELS                                        -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="models">
+          <h2>Models</h2>
+
+          <p>Models are plain Go structs. Keel maps struct fields to database columns using snake_case convention &mdash; no struct tags required for framework behavior:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">Post</span> <span class="kw">struct</span> {
+    ID        <span class="type">int64</span>      <span class="cm">// &rarr; id</span>
+    Title     <span class="type">string</span>     <span class="cm">// &rarr; title</span>
+    Body      <span class="type">string</span>     <span class="cm">// &rarr; body</span>
+    UserID    <span class="type">int64</span>      <span class="cm">// &rarr; user_id</span>
+    Published <span class="type">bool</span>       <span class="cm">// &rarr; published</span>
+    CreatedAt <span class="type">time.Time</span>  <span class="cm">// &rarr; created_at</span>
+    UpdatedAt <span class="type">time.Time</span>  <span class="cm">// &rarr; updated_at</span>
+}
+
+<span class="kw">type</span> <span class="type">CreatePostInput</span> <span class="kw">struct</span> {
+    Title <span class="type">string</span> <span class="str">`json:"title" validate:"required,max=200"`</span>
+    Body  <span class="type">string</span> <span class="str">`json:"body"  validate:"required"`</span>
+}</pre>
+          </div>
+
+          <p>Register models in your module's <code>Models()</code> method:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Models</span>() []<span class="type">keel.Model</span> {
+    <span class="kw">return</span> []<span class="type">keel.Model</span>{
+        keel.<span class="fn">DefineModel</span>(<span class="str">"posts"</span>, <span class="type">Post</span>{}),
+        keel.<span class="fn">DefineModel</span>(<span class="str">"comments"</span>, <span class="type">Comment</span>{}),
+    }
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- RELATIONSHIPS                                 -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="relationships">
+          <h2>Relationships</h2>
+
+          <p>Define model relationships inline when registering models:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>keel.<span class="fn">DefineModel</span>(<span class="str">"posts"</span>, <span class="type">Post</span>{},
+    keel.<span class="fn">BelongsTo</span>(<span class="str">"author"</span>, user.<span class="type">User</span>{}),    <span class="cm">// post belongs to a user</span>
+    keel.<span class="fn">HasMany</span>(<span class="str">"comments"</span>, <span class="type">Comment</span>{}),      <span class="cm">// post has many comments</span>
+    keel.<span class="fn">HasOne</span>(<span class="str">"metadata"</span>, <span class="type">PostMeta</span>{}),     <span class="cm">// post has one metadata</span>
+)</pre>
+          </div>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>Description</th>
+                  <th>Foreign Key</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>BelongsTo(name, model)</code></td>
+                  <td>This model has a foreign key to the related model</td>
+                  <td><code>user_id</code> on posts table</td>
+                </tr>
+                <tr>
+                  <td><code>HasMany(name, model)</code></td>
+                  <td>Related model has many references to this one</td>
+                  <td><code>post_id</code> on comments table</td>
+                </tr>
+                <tr>
+                  <td><code>HasOne(name, model)</code></td>
+                  <td>Related model has exactly one reference to this one</td>
+                  <td><code>post_id</code> on metadata table</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Eager-load relationships using <code>.With()</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).<span class="fn">With</span>(<span class="str">"author"</span>).<span class="fn">With</span>(<span class="str">"comments"</span>).<span class="fn">All</span>()</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MIGRATIONS                                    -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="migrations">
+          <h2>Migrations</h2>
+
+          <p>Define versioned, reversible migrations in your module. Each migration has an <code>Up</code> function (to apply) and a <code>Down</code> function (to rollback):</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Migrations</span>() []<span class="type">keel.Migration</span> {
+    <span class="kw">return</span> []<span class="type">keel.Migration</span>{
+        {Version: <span class="lit">1</span>, Up: m.createPostsTable, Down: m.dropPostsTable},
+        {Version: <span class="lit">2</span>, Up: m.addPublishedColumn, Down: m.removePublishedColumn},
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">createPostsTable</span>(schema *<span class="type">keel.Schema</span>) {
+    schema.<span class="fn">Create</span>(<span class="str">"posts"</span>, <span class="kw">func</span>(t *<span class="type">keel.Table</span>) {
+        t.<span class="fn">ID</span>()
+        t.<span class="fn">String</span>(<span class="str">"title"</span>, <span class="lit">200</span>)
+        t.<span class="fn">Text</span>(<span class="str">"body"</span>)
+        t.<span class="fn">ForeignKey</span>(<span class="str">"user_id"</span>, <span class="str">"users"</span>)
+        t.<span class="fn">Bool</span>(<span class="str">"published"</span>).<span class="fn">Default</span>(<span class="lit">false</span>)
+        t.<span class="fn">Timestamps</span>()
+    })
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">dropPostsTable</span>(schema *<span class="type">keel.Schema</span>) {
+    schema.<span class="fn">Drop</span>(<span class="str">"posts"</span>)
+}</pre>
+          </div>
+
+          <h3>Running Migrations</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">bash</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>go run . migrate up       # Run all pending migrations
+go run . migrate down     # Rollback the last migration
+go run . migrate status   # Show migration state per module</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- AUTHENTICATION                                -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="authentication">
+          <h2>Authentication</h2>
+
+          <p>Keel provides built-in JWT (HMAC-SHA256) and session-based authentication. No external dependencies required.</p>
+
+          <h3>JWT Authentication</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Generate a JWT token</span>
+token, err := keel.<span class="fn">NewJWT</span>(keel.<span class="type">JWTClaims</span>{
+    UserID: user.ID,
+    Role:   user.Role,
+}, app.Config(<span class="str">"JWT_SECRET"</span>))
+
+<span class="cm">// Return it to the client</span>
+<span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">string</span>{<span class="str">"token"</span>: token})</pre>
+          </div>
+
+          <h3>Protecting Routes</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Use keel.Auth middleware to protect routes</span>
+keel.<span class="fn">Post</span>(<span class="str">"/posts"</span>, m.CreatePost).<span class="fn">Middleware</span>(keel.Auth)
+
+<span class="cm">// Access the authenticated user in handlers</span>
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">CreatePost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    userId := ctx.<span class="fn">UserID</span>()   <span class="cm">// extracted from JWT</span>
+    <span class="cm">// ...</span>
+}
+
+<span class="cm">// Role-based access control</span>
+keel.<span class="fn">Delete</span>(<span class="str">"/admin/users/{id}"</span>, m.DeleteUser).
+    <span class="fn">Middleware</span>(keel.Auth, keel.RequireRole(<span class="str">"admin"</span>))</pre>
+          </div>
+
+          <h3>Session Management</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Store data in session</span>
+ctx.Session.<span class="fn">Set</span>(<span class="str">"user_id"</span>, user.ID)
+ctx.Session.<span class="fn">Save</span>()
+
+<span class="cm">// Read from session</span>
+userId := ctx.Session.<span class="fn">Get</span>(<span class="str">"user_id"</span>)
+
+<span class="cm">// Destroy session (logout)</span>
+ctx.Session.<span class="fn">Destroy</span>()</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MIDDLEWARE                                     -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="middleware">
+          <h2>Middleware</h2>
+
+          <p>Middleware wraps handlers to add cross-cutting behavior. Keel supports middleware at three levels: global, module, and route.</p>
+
+          <h3>Built-in Middleware</h3>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Middleware</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>keel.Logger()</code></td>
+                  <td>Structured request logging (method, path, status, duration)</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Recovery()</code></td>
+                  <td>Recover from panics and return 500 error</td>
+                </tr>
+                <tr>
+                  <td><code>keel.CORS(config)</code></td>
+                  <td>Cross-Origin Resource Sharing headers</td>
+                </tr>
+                <tr>
+                  <td><code>keel.Auth</code></td>
+                  <td>JWT authentication (reads Authorization header)</td>
+                </tr>
+                <tr>
+                  <td><code>keel.RequireRole(role)</code></td>
+                  <td>Role-based access control (use after Auth)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Global Middleware</h3>
+
+          <p>Apply middleware to all routes in the application:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>app := keel.<span class="fn">New</span>(modules...)
+app.<span class="fn">Use</span>(keel.<span class="fn">Logger</span>())
+app.<span class="fn">Use</span>(keel.<span class="fn">Recovery</span>())
+app.<span class="fn">Use</span>(keel.<span class="fn">CORS</span>(keel.<span class="type">CORSConfig</span>{Origin: <span class="str">"*"</span>}))</pre>
+          </div>
+
+          <h3>Module-Level Middleware</h3>
+
+          <p>Apply to all routes within a module by implementing <code>HasMiddleware</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">AdminModule</span>) <span class="fn">Middleware</span>() []<span class="type">keel.Middleware</span> {
+    <span class="kw">return</span> []<span class="type">keel.Middleware</span>{keel.Auth}
+}</pre>
+          </div>
+
+          <h3>Custom Middleware</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">RateLimit</span>(requests <span class="type">int</span>, window <span class="type">time.Duration</span>) <span class="type">keel.Middleware</span> {
+    <span class="kw">return</span> <span class="kw">func</span>(next <span class="type">keel.Handler</span>) <span class="type">keel.Handler</span> {
+        <span class="kw">return</span> <span class="kw">func</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+            <span class="cm">// Check rate limit...</span>
+            <span class="kw">if</span> overLimit {
+                <span class="kw">return</span> keel.<span class="fn">NewHTTPError</span>(<span class="lit">429</span>, <span class="str">"Too many requests"</span>)
+            }
+            <span class="kw">return</span> <span class="fn">next</span>(ctx)
+        }
+    }
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- EVENTS                                        -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="events">
+          <h2>Event Bus</h2>
+
+          <p>Keel includes a built-in event bus for decoupling modules. Events support both synchronous and asynchronous dispatch.</p>
+
+          <h3>Defining Events</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Define event types as plain structs</span>
+<span class="kw">type</span> <span class="type">PostCreatedEvent</span> <span class="kw">struct</span> {
+    Post <span class="type">Post</span>
+}
+
+<span class="kw">type</span> <span class="type">PostDeletedEvent</span> <span class="kw">struct</span> {
+    PostID <span class="type">int64</span>
+}</pre>
+          </div>
+
+          <h3>Declaring Events in a Module</h3>
+
+          <p>Declare which events a module emits and listens to in the <code>Events()</code> method:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Events</span>() []<span class="type">keel.EventBinding</span> {
+    <span class="kw">return</span> []<span class="type">keel.EventBinding</span>{
+        <span class="cm">// This module emits these events</span>
+        {Emits: <span class="type">PostCreatedEvent</span>{}},
+        {Emits: <span class="type">PostDeletedEvent</span>{}},
+
+        <span class="cm">// This module listens to events from other modules</span>
+        {Listens: user.<span class="type">UserDeletedEvent</span>{}, Handler: m.cleanupUserPosts},
+    }
+}</pre>
+          </div>
+
+          <h3>Emitting Events</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Emit an event from a handler</span>
+ctx.<span class="fn">Emit</span>(<span class="type">PostCreatedEvent</span>{Post: post})</pre>
+          </div>
+
+          <h3>Handling Events</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">NotificationModule</span>) <span class="fn">onPostCreated</span>(event <span class="type">any</span>) <span class="type">error</span> {
+    e := event.(<span class="type">PostCreatedEvent</span>)
+    <span class="cm">// Send notification, update feeds, etc.</span>
+    <span class="kw">return</span> <span class="lit">nil</span>
+}</pre>
+          </div>
+
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>
+            <p>Events are a great way to keep modules decoupled. The blog module doesn't need to know about notifications &mdash; it just emits <code>PostCreatedEvent</code>, and any module can listen.</p>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- VALIDATION                                    -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="validation">
+          <h2>Validation</h2>
+
+          <p>Keel provides built-in validation with explicit rules. Validate incoming data using <code>ctx.Validate()</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">CreatePostInput</span> <span class="kw">struct</span> {
+    Title <span class="type">string</span> <span class="str">`json:"title" validate:"required,max=200"`</span>
+    Body  <span class="type">string</span> <span class="str">`json:"body"  validate:"required"`</span>
+    Tags  []<span class="type">string</span> <span class="str">`json:"tags" validate:"max=5"`</span>
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">CreatePost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    <span class="kw">var</span> input <span class="type">CreatePostInput</span>
+    <span class="kw">if</span> err := ctx.<span class="fn">BindJSON</span>(&amp;input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">if</span> err := ctx.<span class="fn">Validate</span>(input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err <span class="cm">// returns 422 with structured field errors</span>
+    }
+    <span class="cm">// input is valid, proceed...</span>
+}</pre>
+          </div>
+
+          <h3>Validation Error Response</h3>
+
+          <p>When validation fails, a 422 response is returned with structured errors:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">json</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>{
+  "error": "Validation failed",
+  "fields": {
+    "title": ["title is required"],
+    "body": ["body is required"]
+  }
+}</pre>
+          </div>
+
+          <h3>Available Validation Rules</h3>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Rule</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>required</code></td>
+                  <td>Field must be present and non-empty</td>
+                  <td><code>validate:"required"</code></td>
+                </tr>
+                <tr>
+                  <td><code>min=N</code></td>
+                  <td>Minimum length (string) or value (number)</td>
+                  <td><code>validate:"min=3"</code></td>
+                </tr>
+                <tr>
+                  <td><code>max=N</code></td>
+                  <td>Maximum length (string) or value (number)</td>
+                  <td><code>validate:"max=200"</code></td>
+                </tr>
+                <tr>
+                  <td><code>email</code></td>
+                  <td>Must be a valid email address</td>
+                  <td><code>validate:"email"</code></td>
+                </tr>
+                <tr>
+                  <td><code>url</code></td>
+                  <td>Must be a valid URL</td>
+                  <td><code>validate:"url"</code></td>
+                </tr>
+                <tr>
+                  <td><code>oneof=a b c</code></td>
+                  <td>Must be one of the listed values</td>
+                  <td><code>validate:"oneof=draft published"</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- WEBSOCKET                                     -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="websocket">
+          <h2>WebSocket</h2>
+
+          <p>Keel provides built-in WebSocket support for real-time bidirectional communication:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Routes</span>() []<span class="type">keel.Route</span> {
+    <span class="kw">return</span> []<span class="type">keel.Route</span>{
+        keel.<span class="fn">Get</span>(<span class="str">"/ws"</span>, m.HandleWebSocket),
+    }
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">HandleWebSocket</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    conn, err := ctx.<span class="fn">UpgradeWebSocket</span>()
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">defer</span> conn.<span class="fn">Close</span>()
+
+    <span class="kw">for</span> {
+        msg, err := conn.<span class="fn">ReadMessage</span>()
+        <span class="kw">if</span> err != <span class="lit">nil</span> {
+            <span class="kw">break</span>
+        }
+        <span class="cm">// Echo message back</span>
+        conn.<span class="fn">WriteMessage</span>(msg)
+    }
+    <span class="kw">return</span> <span class="lit">nil</span>
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- SSE                                           -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="sse">
+          <h2>Server-Sent Events</h2>
+
+          <p>SSE provides a simple way to push real-time updates from server to client over HTTP:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">StreamUpdates</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    stream, err := ctx.<span class="fn">SSE</span>()
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">defer</span> stream.<span class="fn">Close</span>()
+
+    <span class="kw">for</span> {
+        <span class="kw">select</span> {
+        <span class="kw">case</span> &lt;-ctx.Done():
+            <span class="kw">return</span> <span class="lit">nil</span>
+        <span class="kw">case</span> update := &lt;-m.updates:
+            stream.<span class="fn">Send</span>(<span class="str">"update"</span>, update)
+        }
+    }
+}</pre>
+          </div>
+
+          <h3>Client-Side</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">javascript</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>const source = new EventSource('/stream');
+source.addEventListener('update', (e) => {
+  const data = JSON.parse(e.data);
+  console.log('Received:', data);
+});</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- STORAGE                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="storage">
+          <h2>File Storage</h2>
+
+          <p>Keel provides a file storage abstraction for handling uploads and file management:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">UploadAvatar</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    file, err := ctx.<span class="fn">FormFile</span>(<span class="str">"avatar"</span>)
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+
+    path, err := ctx.Storage.<span class="fn">Put</span>(<span class="str">"avatars"</span>, file)
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">string</span>{<span class="str">"path"</span>: path})
+}
+
+<span class="cm">// Read a file</span>
+data, err := ctx.Storage.<span class="fn">Get</span>(<span class="str">"avatars/user-123.jpg"</span>)
+
+<span class="cm">// Delete a file</span>
+err := ctx.Storage.<span class="fn">Delete</span>(<span class="str">"avatars/user-123.jpg"</span>)
+
+<span class="cm">// Check if file exists</span>
+exists := ctx.Storage.<span class="fn">Exists</span>(<span class="str">"avatars/user-123.jpg"</span>)</pre>
+          </div>
+
+          <div class="callout callout-info">
+            <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/></svg>
+            <p>Storage backends are configured via environment variables. Keel supports local filesystem storage out of the box. Configure <code>STORAGE_DRIVER</code> and <code>STORAGE_PATH</code> in your <code>.env</code> file.</p>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- LOGGING                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="logging">
+          <h2>Logging</h2>
+
+          <p>Keel wraps Go's <code>log/slog</code> (available since Go 1.21) to provide structured logging:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// In handlers, use the context logger</span>
+ctx.Log.<span class="fn">Info</span>(<span class="str">"post created"</span>, <span class="str">"post_id"</span>, post.ID, <span class="str">"user_id"</span>, userId)
+ctx.Log.<span class="fn">Error</span>(<span class="str">"failed to send email"</span>, <span class="str">"err"</span>, err)
+ctx.Log.<span class="fn">Warn</span>(<span class="str">"rate limit approaching"</span>, <span class="str">"count"</span>, count)
+ctx.Log.<span class="fn">Debug</span>(<span class="str">"processing request"</span>, <span class="str">"path"</span>, ctx.Path())</pre>
+          </div>
+
+          <p>The <code>Logger()</code> middleware automatically logs every request:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">text</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>2024-01-15T10:30:00Z INF request method=GET path=/posts status=200 duration=2.3ms
+2024-01-15T10:30:01Z INF request method=POST path=/posts status=201 duration=15.7ms
+2024-01-15T10:30:02Z ERR request method=GET path=/posts/999 status=404 duration=1.1ms</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- CONFIGURATION                                 -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="configuration">
+          <h2>Configuration</h2>
+
+          <p>Keel loads configuration from environment variables. Use a <code>.env</code> file for local development:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">env</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre># .env
+APP_PORT=8080
+DB_DRIVER=postgres
+DB_DSN=postgres://user:pass@localhost/myapp?sslmode=disable
+JWT_SECRET=your-secret-key-here
+STORAGE_DRIVER=local
+STORAGE_PATH=./uploads</pre>
+          </div>
+
+          <h3>Accessing Config</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="cm">// Simple string config</span>
+port := app.<span class="fn">Config</span>(<span class="str">"APP_PORT"</span>)
+
+<span class="cm">// With default value</span>
+port := app.<span class="fn">ConfigDefault</span>(<span class="str">"APP_PORT"</span>, <span class="str">"8080"</span>)</pre>
+          </div>
+
+          <h3>Module-Level Config</h3>
+
+          <p>Modules can declare typed configuration by implementing the <code>HasConfig</code> interface:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">type</span> <span class="type">EmailConfig</span> <span class="kw">struct</span> {
+    SMTPHost <span class="type">string</span> <span class="str">`env:"SMTP_HOST"`</span>
+    SMTPPort <span class="type">int</span>    <span class="str">`env:"SMTP_PORT" default:"587"`</span>
+    From     <span class="type">string</span> <span class="str">`env:"EMAIL_FROM"`</span>
+}
+
+<span class="kw">func</span> (m <span class="type">EmailModule</span>) <span class="fn">Config</span>() <span class="type">any</span> {
+    <span class="kw">return</span> &amp;<span class="type">EmailConfig</span>{}
+}</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- CLI                                           -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="cli">
+          <h2>CLI Commands</h2>
+
+          <p>Keel includes a built-in CLI runner. When you call <code>app.RunCLI()</code>, the following commands are available:</p>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>go run . serve</code></td>
+                  <td>Start the HTTP server</td>
+                </tr>
+                <tr>
+                  <td><code>go run . migrate up</code></td>
+                  <td>Run all pending migrations</td>
+                </tr>
+                <tr>
+                  <td><code>go run . migrate down</code></td>
+                  <td>Rollback the last migration</td>
+                </tr>
+                <tr>
+                  <td><code>go run . migrate status</code></td>
+                  <td>Show migration state per module</td>
+                </tr>
+                <tr>
+                  <td><code>go run . routes</code></td>
+                  <td>Print all routes (method, path, module, middleware)</td>
+                </tr>
+                <tr>
+                  <td><code>go run . modules</code></td>
+                  <td>Print all modules with dependency graph</td>
+                </tr>
+                <tr>
+                  <td><code>go run . describe</code></td>
+                  <td>Output full app manifest as JSON (agent-readable)</td>
+                </tr>
+                <tr>
+                  <td><code>go run . describe module blog</code></td>
+                  <td>Output single module manifest</td>
+                </tr>
+                <tr>
+                  <td><code>go run . generate module &lt;name&gt;</code></td>
+                  <td>Scaffold a new module</td>
+                </tr>
+                <tr>
+                  <td><code>go run . docs</code></td>
+                  <td>Generate ARCHITECTURE.md from live app state</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Custom Commands</h3>
+
+          <p>Add module-specific CLI commands by implementing <code>HasCommands</code>:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">Commands</span>() []<span class="type">keel.Command</span> {
+    <span class="kw">return</span> []<span class="type">keel.Command</span>{
+        {
+            Name: <span class="str">"blog:import"</span>,
+            Desc: <span class="str">"Import posts from a CSV file"</span>,
+            Run:  m.importPosts,
+        },
+        {
+            Name: <span class="str">"blog:export"</span>,
+            Desc: <span class="str">"Export all posts to JSON"</span>,
+            Run:  m.exportPosts,
+        },
+    }
+}
+
+<span class="cm">// Run with: go run . blog:import --file=posts.csv</span></pre>
+          </div>
+
+          <h3>The <code>describe</code> Command</h3>
+
+          <p>The <code>describe</code> command outputs a machine-readable JSON manifest of your entire application, making it ideal for AI agent consumption:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">bash</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>go run . describe</pre>
+          </div>
+
+          <p>This outputs the complete app structure including all modules, routes, models, events, dependencies, and middleware &mdash; everything an agent needs to understand the application.</p>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- TESTING                                       -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="testing">
+          <h2>Testing</h2>
+
+          <p>Keel provides a test app builder and assertion helpers for writing integration tests:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">TestListPosts</span>(t *<span class="type">testing.T</span>) {
+    app := keel.<span class="fn">TestApp</span>(t,
+        blog.<span class="type">Module</span>{},
+        user.<span class="type">Module</span>{},
+    )
+
+    <span class="cm">// Seed test data</span>
+    app.DB.<span class="fn">Create</span>(<span class="str">"users"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{<span class="str">"name"</span>: <span class="str">"Alice"</span>})
+    app.DB.<span class="fn">Create</span>(<span class="str">"posts"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+        <span class="str">"title"</span>:   <span class="str">"Test Post"</span>,
+        <span class="str">"body"</span>:    <span class="str">"Content"</span>,
+        <span class="str">"user_id"</span>: <span class="lit">1</span>,
+    })
+
+    <span class="cm">// Make a test request</span>
+    resp := app.<span class="fn">Get</span>(<span class="str">"/posts"</span>)
+    resp.<span class="fn">AssertStatus</span>(<span class="lit">200</span>)
+    resp.<span class="fn">AssertJSONPath</span>(<span class="str">"$[0].title"</span>, <span class="str">"Test Post"</span>)
+}
+
+<span class="kw">func</span> <span class="fn">TestCreatePost</span>(t *<span class="type">testing.T</span>) {
+    app := keel.<span class="fn">TestApp</span>(t, blog.<span class="type">Module</span>{}, user.<span class="type">Module</span>{})
+
+    <span class="cm">// Authenticated request</span>
+    resp := app.<span class="fn">WithAuth</span>(userId).<span class="fn">PostJSON</span>(<span class="str">"/posts"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+        <span class="str">"title"</span>: <span class="str">"New Post"</span>,
+        <span class="str">"body"</span>:  <span class="str">"Post content"</span>,
+    })
+    resp.<span class="fn">AssertStatus</span>(<span class="lit">201</span>)
+    resp.<span class="fn">AssertJSONPath</span>(<span class="str">"$.title"</span>, <span class="str">"New Post"</span>)
+}</pre>
+          </div>
+
+          <h3>Test Helpers</h3>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>app.Get(path)</code></td>
+                  <td>Send a GET request</td>
+                </tr>
+                <tr>
+                  <td><code>app.PostJSON(path, body)</code></td>
+                  <td>Send a POST request with JSON body</td>
+                </tr>
+                <tr>
+                  <td><code>app.PutJSON(path, body)</code></td>
+                  <td>Send a PUT request with JSON body</td>
+                </tr>
+                <tr>
+                  <td><code>app.Delete(path)</code></td>
+                  <td>Send a DELETE request</td>
+                </tr>
+                <tr>
+                  <td><code>app.WithAuth(userId)</code></td>
+                  <td>Set authenticated user for next request</td>
+                </tr>
+                <tr>
+                  <td><code>resp.AssertStatus(code)</code></td>
+                  <td>Assert HTTP status code</td>
+                </tr>
+                <tr>
+                  <td><code>resp.AssertJSONPath(path, val)</code></td>
+                  <td>Assert a value at a JSON path</td>
+                </tr>
+                <tr>
+                  <td><code>resp.AssertContains(text)</code></td>
+                  <td>Assert response body contains text</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Run tests with:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">bash</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre>go test ./...</pre>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- AGENT WORKFLOW                                -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="agent-workflow">
+          <h2>Agent Workflow</h2>
+
+          <p>Keel is designed to be AI-agent-friendly. An AI coding agent working with Keel follows this loop:</p>
+
+          <ol>
+            <li><strong>Read <code>main.go</code></strong> &mdash; see all modules, understand app scope</li>
+            <li><strong>Read target <code>module.go</code></strong> &mdash; see routes, models, events, deps for that feature</li>
+            <li><strong>Run <code>go run . describe</code></strong> &mdash; get machine-readable JSON of entire app (optional, for complex tasks)</li>
+            <li><strong>Generate code</strong> &mdash; new modules follow the identical <code>Module</code> interface pattern every time</li>
+            <li><strong>Compile</strong> &mdash; <code>go build ./...</code> catches all errors instantly (no runtime surprises)</li>
+            <li><strong>Test</strong> &mdash; <code>go test ./...</code> with <code>keel.TestApp()</code> for integration tests</li>
+          </ol>
+
+          <div class="callout callout-tip">
+            <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+            <p>An agent never needs to search for where something is defined. One module = one <code>module.go</code> = complete declaration. No hunting through scattered config files or service providers.</p>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- DESIGN CONSTRAINTS                            -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="design-constraints">
+          <h2>Design Constraints</h2>
+
+          <p>Keel enforces these deliberate constraints to keep codebases predictable and maintainable:</p>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Constraint</th>
+                  <th>Rationale</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Zero external dependencies</strong></td>
+                  <td>Only Go stdlib and <code>golang.org/x/</code> packages. No transitive dependency risk.</td>
+                </tr>
+                <tr>
+                  <td><strong>No reflection</strong></td>
+                  <td>All wiring is explicit Go code. No runtime type inspection surprises.</td>
+                </tr>
+                <tr>
+                  <td><strong>No struct tags for framework behavior</strong></td>
+                  <td>Models use convention (snake_case field mapping). Tags are only for JSON/validation.</td>
+                </tr>
+                <tr>
+                  <td><strong>No global state</strong></td>
+                  <td>Everything hangs off the <code>App</code> struct. No package-level vars or singletons.</td>
+                </tr>
+                <tr>
+                  <td><strong>No <code>init()</code> functions</strong></td>
+                  <td>Module initialization is explicit via lifecycle hooks (<code>OnInit</code>, <code>OnReady</code>).</td>
+                </tr>
+                <tr>
+                  <td><strong>Compile-time safety</strong></td>
+                  <td>If it compiles, the wiring is correct. No runtime registration surprises.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- COMPARISON                                    -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="comparison">
+          <h2>Comparison</h2>
+
+          <p>How Keel compares to other Go frameworks:</p>
+
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>net/http</th>
+                  <th>Gin/Echo</th>
+                  <th>Buffalo</th>
+                  <th>Keel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Router</td>
+                  <td>basic mux</td>
+                  <td>radix tree</td>
+                  <td>gorilla/mux</td>
+                  <td><strong>radix tree</strong></td>
+                </tr>
+                <tr>
+                  <td>ORM / Query builder</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td>pop</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>Migrations</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td>pop</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>Validation</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td>validate</td>
+                  <td><strong>explicit rules</strong></td>
+                </tr>
+                <tr>
+                  <td>Auth (JWT/sessions)</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>WebSocket</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>SSE</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>Event bus</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>CLI scaffold</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td>buffalo CLI</td>
+                  <td><strong>built-in</strong></td>
+                </tr>
+                <tr>
+                  <td>Module system</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td class="no">&mdash;</td>
+                  <td><strong>core design</strong></td>
+                </tr>
+                <tr>
+                  <td>External deps</td>
+                  <td>0</td>
+                  <td>8+</td>
+                  <td>40+</td>
+                  <td><strong>0</strong></td>
+                </tr>
+                <tr>
+                  <td>Reflection</td>
+                  <td>no</td>
+                  <td>yes (binding)</td>
+                  <td>yes (pop)</td>
+                  <td><strong>no</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>vs net/http</h3>
+          <p>Keel adds module organization, ORM, migrations, auth, events, CLI, and a request context with helpers &mdash; without any external dependencies.</p>
+
+          <h3>vs Gin/Echo</h3>
+          <p>These are routing-focused. Keel provides full-stack features (database, auth, events, CLI) under a single module contract.</p>
+
+          <h3>vs Buffalo</h3>
+          <p>Similar scope, but Buffalo pulls in 40+ dependencies and uses reflection-heavy ORMs. Keel is zero-dep and fully explicit.</p>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- FULL APP EXAMPLE                              -->
+        <!-- ============================================ -->
+        <section class="docs-section" id="app-example">
+          <h2>Full App Example</h2>
+
+          <p>A complete <code>main.go</code> wiring together multiple modules:</p>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">package</span> main
+
+<span class="kw">import</span> <span class="str">"github.com/keel-go/keel"</span>
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+    app := keel.<span class="fn">New</span>(
+        user.<span class="type">Module</span>{},
+        blog.<span class="type">Module</span>{},
+        comment.<span class="type">Module</span>{},
+        notification.<span class="type">Module</span>{},
+    )
+
+    app.<span class="fn">Use</span>(keel.<span class="fn">Logger</span>())
+    app.<span class="fn">Use</span>(keel.<span class="fn">Recovery</span>())
+    app.<span class="fn">Use</span>(keel.<span class="fn">CORS</span>(keel.<span class="type">CORSConfig</span>{Origin: <span class="str">"*"</span>}))
+
+    app.<span class="fn">Serve</span>(<span class="str">":8080"</span>)
+}</pre>
+          </div>
+
+          <h3>Complete Handler Example</h3>
+
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">go</span>
+              <button class="code-block-copy">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">ListPosts</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    posts, err := ctx.DB.<span class="fn">Select</span>(<span class="str">"posts"</span>).
+        <span class="fn">With</span>(<span class="str">"author"</span>).
+        <span class="fn">Paginate</span>(ctx.<span class="fn">QueryInt</span>(<span class="str">"page"</span>, <span class="lit">1</span>), <span class="lit">20</span>)
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">200</span>, posts)
+}
+
+<span class="kw">func</span> (m <span class="type">Module</span>) <span class="fn">CreatePost</span>(ctx *<span class="type">keel.Context</span>) <span class="type">error</span> {
+    <span class="kw">var</span> input <span class="type">CreatePostInput</span>
+    <span class="kw">if</span> err := ctx.<span class="fn">BindJSON</span>(&amp;input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+    <span class="kw">if</span> err := ctx.<span class="fn">Validate</span>(input); err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err <span class="cm">// returns 422 with structured errors</span>
+    }
+
+    post, err := ctx.DB.<span class="fn">Create</span>(<span class="str">"posts"</span>, <span class="kw">map</span>[<span class="type">string</span>]<span class="type">any</span>{
+        <span class="str">"title"</span>:   input.Title,
+        <span class="str">"body"</span>:    input.Body,
+        <span class="str">"user_id"</span>: ctx.<span class="fn">UserID</span>(),
+    })
+    <span class="kw">if</span> err != <span class="lit">nil</span> {
+        <span class="kw">return</span> err
+    }
+
+    ctx.<span class="fn">Emit</span>(<span class="type">PostCreatedEvent</span>{Post: post})
+    <span class="kw">return</span> ctx.<span class="fn">JSON</span>(<span class="lit">201</span>, post)
+}</pre>
+          </div>
+        </section>
+
+      </div><!-- end docs-content -->
+    </main>
+  </div><!-- end docs-layout -->
+
+  <!-- Mobile sidebar toggle -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 16V4M4 10l6-6 6 6"/></svg>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" fill="currentColor" opacity="0.15"/>
+          <path d="M16 2L4 8v16l12 6 12-6V8L16 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M10 12l6 4 6-4M16 16v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>Keel</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/keel-go/keel" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/keel-go/keel/issues" target="_blank" rel="noopener">Issues</a>
+        <a href="https://pkg.go.dev/github.com/keel-go/keel" target="_blank" rel="noopener">Go Docs</a>
+      </div>
+      <p class="footer-copy">All rights reserved. This code is proprietary and for sole use by the owner.</p>
+    </div>
+  </footer>
+
+  <script src="docs.js"></script>
+</body>
+</html>
